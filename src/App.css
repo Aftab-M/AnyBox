@@ -1,0 +1,137 @@
+body{
+  margin: 0rem;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: blueviolet;
+}
+
+
+.title{
+  margin: 1rem;
+  border-radius: 8px;
+  background-color: black;
+  color: white;
+  padding: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.loginbtn{
+  background-color: white;
+  color: black;
+  padding: .7rem;
+  border-radius: 5px;
+  transition: .2s ease;
+}
+.loginbtn:hover{
+  cursor: pointer;
+  background-color: rgb(155, 155, 155);
+  transition: .2s ease;
+}
+
+
+.body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#fileinput{
+  padding: 1rem;
+  background-color: white;
+  /* width: 80%; */
+  
+}
+
+.inputt{
+  margin-top: 2rem;
+  /* background-color: grey; */
+  border-radius: 10px;
+  padding: 1rem;
+  width: 80%;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed black;
+}
+
+.or{
+  padding: 2rem;
+}
+
+.drop{
+  padding: 1rem;
+}
+
+
+input{
+  border-radius: 100px;
+  padding: 5rem;
+  
+}
+
+
+.your-files-main{
+  margin: 1rem;
+  display: flex;
+  height: 70vh;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  
+}
+
+.your-files-title{
+  font-size: 1.5rem;
+  margin-left: 1rem;
+  margin-top: 2rem;
+}
+
+
+.files{
+  margin: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  /* background-color: white; */
+  
+}
+
+@media only screen and (max-width:600px) {
+  .files{
+    justify-content: center;
+  }
+}
+
+.one-file{
+  background-color: rgb(153, 151, 151);
+  margin: .6rem;
+  padding: 1rem;
+  width: 7rem;
+  height: 4rem;
+  border-radius: 8px;
+}
+.one-file:hover{
+  background-color: rgb(180, 175, 175);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -120,6 +120,46 @@ input{
   background-color: rgb(180, 175, 175);
 }
 
+.uploaded-files{
+  width: 70%;
+  /* background-color: grey; */
+  padding: .5rem;
+  border: 2px solid black;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.one-uploaded-file{
+  margin: .5rem;
+  border-radius: 4px;
+  background-color: black;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.cancel{
+  background-color: white;
+  color: black;
+  padding: .7rem;
+  border-radius: 4px;
+  transition: .3s ease;
+}
+
+.cancel:hover{
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  transition: .3s ease;
+  cursor: pointer;
+}
+
 
 .cover{
   background-color: grey;

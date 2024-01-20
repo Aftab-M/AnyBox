@@ -1,32 +1,24 @@
 import { useState } from 'react'
 import { FileUploader } from 'react-drag-drop-files'
+import axios from 'axios'
 import './App.css'
 
 function App() {
 
-  const fileTypes = ['JPG', 'PNG', 'PDF'];
-  const [count, setCount] = useState(0)
- 
-  const [files, setFiles] = useState(['file1', 'file2', 'file3'])
-  const [isDragging, setDragging] = useState(false)
+  const [files, setFiles] = useState([])
 
-  function dragDrop(){
-    
-    
-  }
-
-  const [file, setFile] = useState(null)
-
-  const handleChange = (f) =>{
-    setFile(f)
-    console.log(file)
-  }
 
   const handleDragOver = (e) =>{
     e.preventDefault();
     setDragging(true)
     console.log('Dragging the file now...')
   };
+
+
+  async function sendFiles(){
+    axios.post('http://localhost:3000/sendfiles', {files:files})
+    .then((res)=>{console.log(res)})
+  }
 
   
 
@@ -42,6 +34,13 @@ function App() {
     setDragging(false)
   };
 
+  const removeElement=(e)=>{
+    var arr = [...files]
+    var newarr = arr.filter(item => item !== e)
+    setFiles(newarr)
+
+  }
+
   return (
     <>
       <div className="title">
@@ -50,12 +49,26 @@ function App() {
       </div>
       <div className="body" onDragOver={(e)=>handleDragOver(e)} onDrop={handleDrop} onDragExit={(handleDragEnd)} onDragEnd={handleDragEnd} onDragLeave={handleDragEnd} >
         {
-          (isDragging)
+          (files.length>=1)
           ?
-          <div className='inputt'>DROP IT LIKE IT'S HOOOOT</div>
+          
+            (files.length>=1)?
+            <div className='uploaded-files'>
+              {files.map((e)=>(
+              <div className="one-uploaded-file">
+                <div>{e.name.toString()}</div>
+                <div className='cancel' onClick={()=>{removeElement(e)}}>X</div>
+              </div>
+            ))}
+            </div>
+            :
+            <div>
+              <center>No files yet...</center>
+            </div>
+          
           :
-          <div className="inputt"onDragOver={handleDragOver}>
-        <input type="file" name="" id="fileinput" />
+          <div className="inputt" onDragOver={handleDragOver}>
+        <input multiple={true} type="file" name="" id="fileinput" onChange={(e)=>{console.log(e.target.value); setFiles([...files, {name: e.target.value}])}} />
         <div className="or">OR</div>
         <div className="drop">Drop a file here !</div>
         </div>        
@@ -66,11 +79,15 @@ function App() {
           <div className="cover">
           <div className="files">
           {
+            (files.length>=1)?
             files.map((e)=>(
               <div className="one-file">
                 {e.name.toString()}
               </div>
-            ))
+            )):
+            <div>
+              <center>No files yet...</center>
+            </div>
           }
           </div>
           </div>

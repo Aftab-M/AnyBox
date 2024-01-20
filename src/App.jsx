@@ -1,11 +1,16 @@
 import { useState } from 'react'
-import { FileUploader } from 'react-drag-drop-files'
 import axios from 'axios'
 import './App.css'
+
+
+
+
 
 function App() {
 
   const [files, setFiles] = useState([])
+  const [file, setFile] = useState("")
+
 
 
   const handleDragOver = (e) =>{
@@ -14,13 +19,7 @@ function App() {
     console.log('Dragging the file now...')
   };
 
-
-  async function sendFiles(){
-    axios.post('http://localhost:3000/sendfiles', {files:files})
-    .then((res)=>{console.log(res)})
-  }
-
-  
+ 
 
   const handleDrop = (e) =>{
     e.preventDefault()
@@ -41,13 +40,26 @@ function App() {
 
   }
 
+  async function sendFiles(e){
+    e.preventDefault();
+    const formData = new FormData()
+    formData.append('title', 'sometitle');
+    formData.append('file', file)
+    console.log('dlfn', file)
+
+    const result = await axios.post("http://localhost:3000/upload-files", formData, {headers:{"Content-Type":"multipart/form-data"}});
+    console.log(result)
+    
+  }
+
+
   return (
     <>
       <div className="title">
         <div style={{fontSize:"1.3rem"}}>Access Your Files. Anywhere.</div>
         <div className="loginbtn">Log In</div>
       </div>
-      <div className="body" onDragOver={(e)=>handleDragOver(e)} onDrop={handleDrop} onDragExit={(handleDragEnd)} onDragEnd={handleDragEnd} onDragLeave={handleDragEnd} >
+      <div className="body" name='file' onDragOver={(e)=>handleDragOver(e)} onDrop={handleDrop} onDragExit={(handleDragEnd)} onDragEnd={handleDragEnd} onDragLeave={handleDragEnd} >
         {
           (files.length>=1)
           ?
@@ -60,6 +72,7 @@ function App() {
                 <div className='cancel' onClick={()=>{removeElement(e)}}>X</div>
               </div>
             ))}
+            <div className="upload-btn" onClick={()=>{sendFiles()}}>Upload</div>
             </div>
             :
             <div>
@@ -68,7 +81,20 @@ function App() {
           
           :
           <div className="inputt" onDragOver={handleDragOver}>
-        <input multiple={true} type="file" name="" id="fileinput" onChange={(e)=>{console.log(e.target.value); setFiles([...files, {name: e.target.value}])}} />
+
+
+        <input 
+          required
+          className='form-control'
+          type="file" 
+          accept='application/pdf'
+          name="" 
+          id="fileinput" 
+          onChange={(e)=>{setFile(e.target.files[0])}}
+          />
+
+
+        <button onClick={(e)=>{sendFiles(e)}}>Upload</button>
         <div className="or">OR</div>
         <div className="drop">Drop a file here !</div>
         </div>        

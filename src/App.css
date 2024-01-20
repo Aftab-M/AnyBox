@@ -4,7 +4,7 @@ body{
   background-color: blueviolet;
   /* background-color: black; */
 }
-
+ 
 
 .title{
   margin: 1rem;
@@ -130,6 +130,7 @@ input{
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 }
 
 .one-uploaded-file{
@@ -137,8 +138,9 @@ input{
   border-radius: 4px;
   background-color: black;
   color: white;
-  padding: 1rem;
+  padding: .7rem;
   display: flex;
+  width: 95%;
   justify-content: space-between;
   align-items: center;
 }
@@ -147,7 +149,10 @@ input{
 .cancel{
   background-color: white;
   color: black;
-  padding: .7rem;
+  padding: .4rem;
+  padding-left: .5rem;
+  padding-right: .5rem;
+  font-size: 10px;
   border-radius: 4px;
   transition: .3s ease;
 }
@@ -160,6 +165,28 @@ input{
   cursor: pointer;
 }
 
+.upload-btn{
+  background-color: green;
+  color: black;
+  border-radius: 100px;
+  transition: .2s ease;
+  padding: 1rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  cursor: pointer;
+  margin-top: 1.5rem;
+}
+.upload-btn:hover{
+  background-color: black;
+  /* border: 1px solid green; */
+  color: green;
+  transition: .2s ease;
+}
+.upload-btn:active{
+  padding: 1rem;
+  transition: .2s ease;
+}
+
 
 .cover{
   background-color: grey;
@@ -168,6 +195,8 @@ input{
   margin: 1%;
   border-radius: 5px;
 }
+
+
 
 
 

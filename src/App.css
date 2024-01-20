@@ -2,6 +2,7 @@ body{
   margin: 0rem;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: blueviolet;
+  /* background-color: black; */
 }
 
 
@@ -78,7 +79,7 @@ input{
 .your-files-main{
   margin: 1rem;
   display: flex;
-  height: 70vh;
+  height: 90vh;
   flex-direction: column;
   justify-content: start;
   align-items: start;
@@ -107,7 +108,8 @@ input{
 }
 
 .one-file{
-  background-color: rgb(153, 151, 151);
+  background-color: rgb(26, 24, 24);
+  color: white;
   margin: .6rem;
   padding: 1rem;
   width: 7rem;
@@ -119,7 +121,13 @@ input{
 }
 
 
-
+.cover{
+  background-color: grey;
+  width: 98%;
+  height: 100%;
+  margin: 1%;
+  border-radius: 5px;
+}
 
 
 

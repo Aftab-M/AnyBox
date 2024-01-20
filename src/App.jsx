@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import axios from 'axios'
 import './App.css'
-
+import {ref, uploadBytes} from 'firebase/storage';
+import {storage} from './Setup'
+import { v4 } from 'uuid';
 
 
 
@@ -10,6 +12,7 @@ function App() {
 
   const [files, setFiles] = useState([])
   const [file, setFile] = useState("")
+  const [allUploaded, setAllUploaded] = useState(false)
 
 
 
@@ -18,8 +21,6 @@ function App() {
     setDragging(true)
     console.log('Dragging the file now...')
   };
-
- 
 
   const handleDrop = (e) =>{
     e.preventDefault()
@@ -40,18 +41,25 @@ function App() {
 
   }
 
-  async function sendFiles(e){
-    e.preventDefault();
-    const formData = new FormData()
-    formData.append('title', 'sometitle');
-    formData.append('file', file)
-    console.log('dlfn', file)
 
-    const result = await axios.post("http://localhost:3000/upload-files", formData, {headers:{"Content-Type":"multipart/form-data"}});
-    console.log(result)
-    
+  const upload = () => {
+    console.log('In upload...')
+    files.forEach((oneFile)=>{
+      console.log(oneFile.name)
+        const fileRef = ref(storage, `allfiles/${oneFile.name+'_'+v4()}`)
+      uploadBytes(fileRef, oneFile)
+      .then(()=>{
+          console.log('File uploaded :'+file)
+      })
+    })
+    setAllUploaded(true)
+}
+
+
+  function reset(){
+    setFiles([])
+    setAllUploaded(false)
   }
-
 
   return (
     <>
@@ -63,7 +71,7 @@ function App() {
         {
           (files.length>=1)
           ?
-          
+
             (files.length>=1)?
             <div className='uploaded-files'>
               {files.map((e)=>(
@@ -72,7 +80,7 @@ function App() {
                 <div className='cancel' onClick={()=>{removeElement(e)}}>X</div>
               </div>
             ))}
-            <div className="upload-btn" onClick={()=>{sendFiles()}}>Upload</div>
+            <div className= {(allUploaded)?"all-done":"upload-btn"} onClick={()=>{(allUploaded)?reset():upload()}}>{(allUploaded)?<>ALL DONE !   Click to upload more...</>:<>Upload</>}</div>
             </div>
             :
             <div>
@@ -89,12 +97,14 @@ function App() {
           type="file" 
           accept='application/pdf'
           name="" 
+          multiple={true}
           id="fileinput" 
-          onChange={(e)=>{setFile(e.target.files[0])}}
+          on
+          onChange={(e)=>{setFiles(Array.from(e.target.files)); console.log(Array.from(e.target.files))}}
           />
 
 
-        <button onClick={(e)=>{sendFiles(e)}}>Upload</button>
+        {/* <button onClick={(e)=>{upload()}}>Upload</button> */}
         <div className="or">OR</div>
         <div className="drop">Drop a file here !</div>
         </div>        
@@ -110,7 +120,8 @@ function App() {
               <div className="one-file">
                 {e.name.toString()}
               </div>
-            )):
+            ))
+            :
             <div>
               <center>No files yet...</center>
             </div>

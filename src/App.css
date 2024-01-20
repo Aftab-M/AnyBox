@@ -181,11 +181,38 @@ input{
   /* border: 1px solid green; */
   color: green;
   transition: .2s ease;
+  font-weight: bold;
 }
 .upload-btn:active{
   padding: 1rem;
   transition: .2s ease;
 }
+
+.all-done{
+  background-color: green;
+  color: white;
+  border: 2px solid white;
+  border-radius: 100px;
+  font-weight: bold;
+  transition: .2s ease;
+  padding: 1rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  cursor: pointer;
+  margin-top: 1.5rem;
+}
+
+.all-done:hover{
+  background-color: black;
+  /* border: 1px solid green; */
+  color: green;
+  transition: .2s ease;
+}
+.all-done:active{
+  padding: 1rem;
+  transition: .2s ease;
+}
+
 
 
 .cover{

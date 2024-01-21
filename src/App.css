@@ -97,6 +97,7 @@ input{
   margin: 1rem;
   display: flex;
   flex-wrap: wrap;
+  text-align: center;
   /* background-color: white; */
   
 }
@@ -111,13 +112,23 @@ input{
   background-color: rgb(26, 24, 24);
   color: white;
   margin: .6rem;
-  padding: 1rem;
-  width: 7rem;
-  height: 4rem;
+  padding: 2rem;
+  width: 12rem;
+  height: 10rem;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  transition: .2s ease;
+  font-size: 1rem;
 }
 .one-file:hover{
   background-color: rgb(180, 175, 175);
+  cursor: pointer;
+  transition: .2s ease;
+  text-decoration: underline;
+  color: black;
 }
 
 .uploaded-files{
@@ -224,18 +235,8 @@ input{
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* img{
+    width: 10rem;
+    height: 10rem;
+    object-fit: contain;
+} */

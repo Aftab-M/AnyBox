@@ -1,0 +1,48 @@
+.pdfview{
+    background-color: rgb(53, 50, 50);
+    position: fixed;
+    left: 6;
+    top: 0;
+    margin: 1%;
+    padding: 3%;
+    height: 82%;
+    width: 91%;
+    border-radius: 10px
+}
+
+.close{
+    background-color: red;
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: .4rem;
+    margin-top: .4rem;
+    /* padding-left: 1rem;
+    padding-right: 1rem;
+    padding: .6rem; */
+    font-size: .8rem;
+    padding-left: .4rem;
+    padding-right: .4rem;
+    padding-top: .2rem;
+    padding-bottom: .2rem;
+    cursor: pointer;
+    border-radius: 100px;
+    transition: .2s ease;
+}
+.close:hover{
+    background-color: black;
+    color: red;
+    
+    transition: .2s ease;
+}
+
+@media screen and (max-width: 500px) {
+    .pdfview{
+        top: 0;
+        left: 0;
+        height: 93%;
+        width: 89%;
+    }
+    
+}

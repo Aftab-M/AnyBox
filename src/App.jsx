@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import './App.css'
-import {ref, uploadBytes} from 'firebase/storage';
+import {ref, uploadBytes, listAll, getDownloadURL} from 'firebase/storage';
 import {storage} from './Setup'
 import { v4 } from 'uuid';
+import ViewPdf from './ViewPdf';
 
 
 
@@ -13,6 +14,29 @@ function App() {
   const [files, setFiles] = useState([])
   const [file, setFile] = useState("")
   const [allUploaded, setAllUploaded] = useState(false)
+  const [fileList, setFileList] = useState([])
+
+  const [pdf, showPdf] = useState(false)
+  const [pdfLink, setPdfLink] = useState("")
+
+  const [image, showImage] = useState(false)
+  const [imageLink, setImageLink] = useState("")
+
+  const fileListRef = ref(storage, "allfiles/")
+
+  useEffect(()=>{
+    setFileList([])
+    listAll(fileListRef).then((res)=>{
+      res.items.forEach((item)=>{
+        getDownloadURL(item).then((url)=>{
+          
+          setFileList((i)=>[...i, url])
+          // console.log('got : '+url+'with list as : '+fileList)
+        })
+      })
+      // setFileList()
+    })
+  }, [])
 
 
 
@@ -46,10 +70,14 @@ function App() {
     console.log('In upload...')
     files.forEach((oneFile)=>{
       console.log(oneFile.name)
-        const fileRef = ref(storage, `allfiles/${oneFile.name+'_'+v4()}`)
+        const fileRef = ref(storage, `allfiles/${oneFile.name+'%'+v4()}`)
       uploadBytes(fileRef, oneFile)
-      .then(()=>{
-          console.log('File uploaded :'+file)
+      .then((snapshot)=>{
+        getDownloadURL(snapshot.ref).then((url)=>{
+          setFileList((prev)=>[...prev, url])
+        })
+        console.log(fileList)
+          // console.log('File uploaded :'+file)
       })
     })
     setAllUploaded(true)
@@ -61,8 +89,13 @@ function App() {
     setAllUploaded(false)
   }
 
+  function closePdf(bval){
+    showPdf(bval)
+  }
+
   return (
     <>
+    {pdf && <ViewPdf link={pdfLink} callbacc={closePdf} />}
       <div className="title">
         <div style={{fontSize:"1.3rem"}}>Access Your Files. Anywhere.</div>
         <div className="loginbtn">Log In</div>
@@ -115,11 +148,33 @@ function App() {
           <div className="cover">
           <div className="files">
           {
-            (files.length>=1)?
-            files.map((e)=>(
+            (fileList.length>=1)
+            ?
+            fileList.map((e)=>(
+              // <a href={e} target='blank' style={{textDecoration: 'none'}}>
               <div className="one-file">
-                {e.name.toString()}
+                <div onClick={()=>{setPdfLink(e); showPdf(true);}}>
+                {
+                  
+                  e.includes('.pdf')
+                  ?
+                  
+                  <div className='pdf-cover'>
+                    <center><img  width={80} height={80} src="src/pdf.png" alt="PDF IMAGE" /></center>
+                  </div>
+                  :
+                  <center><img width={120} height={120} style={{objectFit: 'contain'}} src={e} alt="" /></center>
+              } 
+              <div className="file-name"> 
+                {/* <a href={e}>{e.split('%')[0]}</a>   */}
+                
+                {ref(storage, e).name.split('%')[0]} 
+                
+                </div>
+                </div>
+                
               </div>
+              // </a>
             ))
             :
             <div>

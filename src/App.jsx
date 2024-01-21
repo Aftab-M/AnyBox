@@ -5,6 +5,7 @@ import {ref, uploadBytes, listAll, getDownloadURL} from 'firebase/storage';
 import {storage} from './Setup'
 import { v4 } from 'uuid';
 import ViewPdf from './ViewPdf';
+import ViewImage from './ViewImage';
 
 
 
@@ -21,6 +22,9 @@ function App() {
 
   const [image, showImage] = useState(false)
   const [imageLink, setImageLink] = useState("")
+  const [imgName, setImgName] = useState("")
+
+  const [dragging, setDragging] = useState(false)
 
   const fileListRef = ref(storage, "allfiles/")
 
@@ -43,7 +47,7 @@ function App() {
   const handleDragOver = (e) =>{
     e.preventDefault();
     setDragging(true)
-    console.log('Dragging the file now...')
+    // console.log('Dragging the file now...')
   };
 
   const handleDrop = (e) =>{
@@ -52,10 +56,11 @@ function App() {
     const droppedFiles = Array.from(e.dataTransfer.files)
     setFiles(droppedFiles);
     console.log(droppedFiles)
+    setDragging(false)
   };
 
   const handleDragEnd = (e) =>{
-    setDragging(false)
+    // setDragging(false)
   };
 
   const removeElement=(e)=>{
@@ -92,15 +97,25 @@ function App() {
   function closePdf(bval){
     showPdf(bval)
   }
+  function closeImage(bval){
+    showImage(bval)
+  }
 
   return (
     <>
+    
+    
     {pdf && <ViewPdf link={pdfLink} callbacc={closePdf} />}
+    {image && <ViewImage link={imageLink} imgname={imgName} callbacc={closeImage} />}
+
+
+
+
       <div className="title">
         <div style={{fontSize:"1.3rem"}}>Access Your Files. Anywhere.</div>
         <div className="loginbtn">Log In</div>
       </div>
-      <div className="body" name='file' onDragOver={(e)=>handleDragOver(e)} onDrop={handleDrop} onDragExit={(handleDragEnd)} onDragEnd={handleDragEnd} onDragLeave={handleDragEnd} >
+      <div className="body" name='file' onDragOver={(e)=>handleDragOver(e)} onDrop={handleDrop}  onDragEnd={()=>{setDragging(false)}}  onDragExitCapture={()=>{setDragging(false)}}  >
         {
           (files.length>=1)
           ?
@@ -128,16 +143,14 @@ function App() {
           required
           className='form-control'
           type="file" 
-          accept='application/pdf'
           name="" 
           multiple={true}
           id="fileinput" 
-          on
           onChange={(e)=>{setFiles(Array.from(e.target.files)); console.log(Array.from(e.target.files))}}
           />
 
-
-        {/* <button onClick={(e)=>{upload()}}>Upload</button> */}
+        {/* {dragging && <div className="drag-cover">SOPFIHBKJn</div>} */}
+        
         <div className="or">OR</div>
         <div className="drop">Drop a file here !</div>
         </div>        
@@ -153,7 +166,15 @@ function App() {
             fileList.map((e)=>(
               // <a href={e} target='blank' style={{textDecoration: 'none'}}>
               <div className="one-file">
-                <div onClick={()=>{setPdfLink(e); showPdf(true);}}>
+                <div onClick={()=>{
+                  if(e.includes('.pdf')){
+                    setPdfLink(e); showPdf(true);
+                  }
+                  else{
+                    setImageLink(e); showImage(true);
+                    setImgName(ref(storage, e).name.split('%')[0])
+                  }
+                }}>
                 {
                   
                   e.includes('.pdf')
@@ -163,13 +184,14 @@ function App() {
                     <center><img  width={80} height={80} src="src/pdf.png" alt="PDF IMAGE" /></center>
                   </div>
                   :
-                  <center><img width={120} height={120} style={{objectFit: 'contain'}} src={e} alt="" /></center>
-              } 
-              <div className="file-name"> 
+                  <div>
+                    <center><img width={120} height={120} style={{objectFit: 'contain'}} src={e} alt="" /></center>
+                  </div>
+                } 
+                
+                <div className="file-name"> 
                 {/* <a href={e}>{e.split('%')[0]}</a>   */}
-                
                 {ref(storage, e).name.split('%')[0]} 
-                
                 </div>
                 </div>
                 

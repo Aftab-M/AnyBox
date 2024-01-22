@@ -30,14 +30,14 @@ function App() {
   const [dragging, setDragging] = useState(false)
 
   const fileListRef = ref(storage, "allfiles/")
-  const [valid, setValid] = useState(true)
+  const [valid, setValid] = useState(false)
 
   useEffect(()=>{
 
-    // var res = prompt('Enter the security code please...')
-    // if(res=='#a#b#c'){
-    //   setValid(true)
-    // }
+    var res = prompt('Enter the security code please...')
+    if(res=='#a#b#c'){
+      setValid(true)
+    }
     
 
 

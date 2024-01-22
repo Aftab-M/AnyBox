@@ -14,7 +14,6 @@ import { DeleteOutline } from '@mui/icons-material';
 function App() {
 
   const [files, setFiles] = useState([])
-  const [file, setFile] = useState("")
   const [allUploaded, setAllUploaded] = useState(false)
   const [fileList, setFileList] = useState([])
 
@@ -177,6 +176,10 @@ function App() {
         </div>        
         }
       </div>
+      
+      <div style={{height: '5rem', width: '5rem', padding: '1rem'}}></div>
+      {  pdf && <div id='imgg'><ViewPdf link={pdfLink} callbacc={closePdf} /> </div> }
+    {image && <div id='docc'><ViewImage link={imageLink} imgname={imgName} callbacc={closeImage} /> </div> }
       <div className="your-files-main">
           <div className="your-files-title">Your Files </div>
           <div className="cover">
@@ -239,13 +242,9 @@ function App() {
           </div>
           
         </div>
-        <div style={{height: '20rem', width: '5rem'}}>
-
-        </div>
 
 
-        {  pdf && <div id='imgg'><ViewPdf link={pdfLink} callbacc={closePdf} /> </div> }
-    {image && <div id='docc'><ViewImage link={imageLink} imgname={imgName} callbacc={closeImage} /> </div> }
+        
       </>
 
 

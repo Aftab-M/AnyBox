@@ -257,7 +257,8 @@ function App() {
     </div>   
     
     }
-    <center><div className="rights">All rights reserved. If found, please appreciate @<a href='https://mail.google.com/mail/u/0/?&to=aftabcm7@gmail.com&tf=cm' target='_blank'>here</a></div></center>
+    {/* <center><div className="rights">All rights reserved. If found, please appreciate @<a href='https://mail.google.com/mail/u/0/?&to=aftabcm7@gmail.com&tf=cm' target='_blank'>here</a></div></center> */}
+    <center><div className="rights">All rights reserved. </div></center>
     
         </>
   )

@@ -1,24 +1,27 @@
 .pdfview{
     background-color: rgb(53, 50, 50);
     margin: 0 auto;
+    /* position: absolute;; */
     padding: 2rem;
-    height: 50%;
-    width: 80%; 
+    height: 90%;
+    width: 93%; 
     border-radius: 10px;
     margin-bottom: 3rem;
+    position: fixed;
+    left: 0;
+    top: 0;
 }
 
 
 
 .imageview{
     background-color: rgb(53, 50, 50);
-    /* position: fixed; */
-    left: 6;
+    position: fixed;
+    left: 0;
     top: 0;
-    margin: 1%;
-    padding: 1%;
-    height: 91%;
+    height: 100%;
     width: 96%;
+    padding: 1rem;
     border-radius: 10px
 }
 
@@ -28,12 +31,23 @@
 }
 
 .imageview img{
-    width: 20rem;
-    height: 20rem;
-    object-fit: contain;
+    width: 30%;
+    height: 50%;
+    object-fit: cover;
     padding: 1rem;
 }
 
+
+.close{
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: .3rem;
+    cursor: pointer;
+    padding: .5rem;
+    border-radius: 10px;
+    background-color: red;
+}
 
 
 @media screen and (max-width: 500px) {

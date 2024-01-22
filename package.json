@@ -10,7 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
     "@firebase/firestore": "^4.4.1",
+    "@mui/icons-material": "^5.15.5",
+    "@mui/styled-engine": "^5.15.5",
     "@react-pdf-viewer/core": "^3.12.0",
     "@react-pdf-viewer/default-layout": "^3.12.0",
     "axios": "^1.6.5",

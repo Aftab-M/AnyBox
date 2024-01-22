@@ -123,6 +123,7 @@ input{
   text-align: center;
   transition: .2s ease;
   font-size: 1rem;
+  position: relative;
 }
 .one-file:hover{
   background-color: rgb(180, 175, 175);
@@ -244,8 +245,30 @@ input{
   height: 100%;
 }
 
+.del{
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 3%; 
+}
+.del:hover{
+  color: red;
+}
+
+
+
 /* img{
     width: 10rem;
     height: 10rem;
     object-fit: contain;
 } */
+
+
+.invalid{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5rem;
+}
+

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import './App.css'
-import {ref, uploadBytes, listAll, getDownloadURL} from 'firebase/storage';
+import {ref, uploadBytes, listAll, getDownloadURL, deleteObject} from 'firebase/storage';
 import {storage} from './Setup'
 import { v4 } from 'uuid';
 import ViewPdf from './ViewPdf';
 import ViewImage from './ViewImage';
+import { DeleteOutline } from '@mui/icons-material';
 
 
 
@@ -27,8 +28,17 @@ function App() {
   const [dragging, setDragging] = useState(false)
 
   const fileListRef = ref(storage, "allfiles/")
+  const [valid, setValid] = useState(true)
 
   useEffect(()=>{
+
+    // var res = prompt('Enter the security code please...')
+    // if(res=='#a#b#c'){
+    //   setValid(true)
+    // }
+    
+
+
     setFileList([])
     listAll(fileListRef).then((res)=>{
       res.items.forEach((item)=>{
@@ -101,11 +111,33 @@ function App() {
     showImage(bval)
   }
 
+  function deleteFile(_file){
+    if(confirm('Delete for sure ?')== true){
+      const theRef = ref(storage, _file)
+    deleteObject(theRef).then(()=>{
+      location.reload()
+      alert('Deleted file successfully !')
+      
+    }).catch((err)=>{alert('Error while deleting file, please try again later !')})  
+    }
+    else{
+      alert('Cancelled !')
+    }
+    
+  }
+
+
+
   return (
     <>
     
-    
-    {pdf && <ViewPdf link={pdfLink} callbacc={closePdf} />}
+
+    {
+
+    (valid)
+    ?
+      <>
+        {pdf && <ViewPdf link={pdfLink} callbacc={closePdf} />}
     {image && <ViewImage link={imageLink} imgname={imgName} callbacc={closeImage} />}
 
 
@@ -166,13 +198,17 @@ function App() {
             fileList.map((e)=>(
               // <a href={e} target='blank' style={{textDecoration: 'none'}}>
               <div className="one-file">
+                <div className="del" onClick={()=>{deleteFile(e)}}><DeleteOutline color='white' /></div>
                 <div onClick={()=>{
                   if(e.includes('.pdf')){
                     setPdfLink(e); showPdf(true);
                   }
-                  else{
+                  else if(e.includes('.png')||e.includes('.jpg')||e.includes('.jpeg')||e.includes('.webp')||e.includes('.gif')||e.includes('.mp4')){
                     setImageLink(e); showImage(true);
                     setImgName(ref(storage, e).name.split('%')[0])
+                  }
+                  else{
+                    
                   }
                 }}>
                 {
@@ -181,11 +217,16 @@ function App() {
                   ?
                   
                   <div className='pdf-cover'>
-                    <center><img  width={80} height={80} src="src/pdf.png" alt="PDF IMAGE" /></center>
+                    <center><img  width={80} height={80} src="https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/pdfs-512.png" alt="PDF IMAGE" /></center>
+                  </div>
+                  :
+                  (e.includes('.png')||e.includes('.jpg')||e.includes('.jpeg')||e.includes('.webp')||e.includes('.gif')||e.includes('.mp4'))?
+                  <div>
+                    <center><img width={120} height={120} style={{objectFit: 'contain'}} src={e} alt="" /></center>
                   </div>
                   :
                   <div>
-                    <center><img width={120} height={120} style={{objectFit: 'contain'}} src={e} alt="" /></center>
+                    <center><a onClick={()=>{window.open(e)}}   target='_blank' download={e} ><img  width={100} height={100} src="https://images.freeimages.com/fic/images/icons/2813/flat_jewels/512/file.png" alt="" /></a></center>
                   </div>
                 } 
                 
@@ -207,7 +248,22 @@ function App() {
           </div>
           
         </div>
-    </>
+
+      </>
+
+
+    :
+    
+    <div className='invalid'>
+      {/* <img src="https://images.roadtrafficsigns.com/img/dp/md/traffic-funny-sign.jpg" alt="NOT ALLOWED" /> */}
+      Oops, looks like you don't know the password.<br/>
+      
+    </div>
+    
+    
+    }
+    
+        </>
   )
 }
 

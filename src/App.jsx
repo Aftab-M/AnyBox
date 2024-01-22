@@ -239,6 +239,9 @@ function App() {
           </div>
           
         </div>
+        <div style={{height: '20rem', width: '5rem'}}>
+
+        </div>
 
 
         {  pdf && <div id='imgg'><ViewPdf link={pdfLink} callbacc={closePdf} /> </div> }

@@ -7,11 +7,14 @@ import { v4 } from 'uuid';
 import ViewPdf from './ViewPdf';
 import ViewImage from './ViewImage';
 import { DeleteOutline } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 function App() {
+
+  const nav = useNavigate()
 
   const [files, setFiles] = useState([])
   const [allUploaded, setAllUploaded] = useState(false)
@@ -27,14 +30,14 @@ function App() {
   const [dragging, setDragging] = useState(false)
 
   const fileListRef = ref(storage, "allfiles/")
-  const [valid, setValid] = useState(false)
+  const [valid, setValid] = useState(true)
 
   useEffect(()=>{
 
-    var res = prompt('Enter the security code please...')
-    if(res=='#a#b#c'){
-      setValid(true)
-    }
+    // var res = prompt('Enter the security code please...')
+    // if(res=='#a#b#c'){
+    //   setValid(true)
+    // }
     
 
 
@@ -177,7 +180,7 @@ function App() {
         }
       </div>
       
-      <div style={{height: '5rem', width: '5rem', padding: '1rem'}}></div>
+      {/* <div style={{height: '5rem', width: '5rem', padding: '1rem'}}></div> */}
       {  pdf && <div id='imgg'><ViewPdf link={pdfLink} callbacc={closePdf} /> </div> }
     {image && <div id='docc'><ViewImage link={imageLink} imgname={imgName} callbacc={closeImage} /> </div> }
       <div className="your-files-main">
@@ -188,17 +191,17 @@ function App() {
             (fileList.length>=1)
             ?
             fileList.map((e)=>(
-              // <a href={e} target='blank' style={{textDecoration: 'none'}}>
+              <a href={e} target='blank' style={{textDecoration: 'none'}}>
               <div className="one-file" key={e}>
                 {/* <div className="del" onClick={()=>{deleteFile(e)}}><DeleteOutline color='white' /></div> */}
                 <div onClick={()=>{
                   if(e.includes('.pdf')){
-                    setPdfLink(e); showPdf(true);
-                    var dd = document.getElementById("docc")
-                    dd.scrollIntoView()
+                    setPdfLink(e); 
+                    // showPdf(true);
                   }
                   else if(e.includes('.png')||e.includes('.jpg')||e.includes('.jpeg')||e.includes('.webp')||e.includes('.gif')||e.includes('.mp4')){
-                    setImageLink(e); showImage(true);
+                    setImageLink(e); 
+                    // showImage(true);
                     setImgName(ref(storage, e).name.split('%')[0])
                   }
                   else{
@@ -220,7 +223,7 @@ function App() {
                   </div>
                   :
                   <div>
-                    <center><a onClick={()=>{window.open(e)}}   target='_blank' download={e} ><img  width={100} height={100} src="https://images.freeimages.com/fic/images/icons/2813/flat_jewels/512/file.png" alt="" /></a></center>
+                    <center><img  width={100} height={100} src="https://images.freeimages.com/fic/images/icons/2813/flat_jewels/512/file.png" alt="" /></center>
                   </div>
                 } 
                 
@@ -231,7 +234,7 @@ function App() {
                 </div>
                 
               </div>
-              // </a>
+               </a>
             ))
             :
             <div>

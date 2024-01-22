@@ -12,8 +12,8 @@ function MainApp() {
       <Routes>
       
         
-        <Route path='/showDoc' element={<ViewPdf/>} />
-        <Route path='/showImg' element={<ViewImage/>} />
+        <Route path='/showDoc/:link' element={<ViewPdf/>} />
+        <Route path='/showImg/:link' element={<ViewImage/>} />
         <Route path='/' element={<App/>} />
       </Routes>
       </DataProvider>

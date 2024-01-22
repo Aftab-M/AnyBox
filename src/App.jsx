@@ -28,14 +28,14 @@ function App() {
   const [dragging, setDragging] = useState(false)
 
   const fileListRef = ref(storage, "allfiles/")
-  const [valid, setValid] = useState(true)
+  const [valid, setValid] = useState(false)
 
   useEffect(()=>{
 
-    // var res = prompt('Enter the security code please...')
-    // if(res=='#a#b#c'){
-    //   setValid(true)
-    // }
+    var res = prompt('Enter the security code please...')
+    if(res=='#a#b#c'){
+      setValid(true)
+    }
     
 
 
@@ -45,7 +45,7 @@ function App() {
         getDownloadURL(item).then((url)=>{
           
           setFileList((i)=>[...i, url])
-          // console.log('got : '+url+'with list as : '+fileList)
+          
         })
       })
       // setFileList()
@@ -57,15 +57,12 @@ function App() {
   const handleDragOver = (e) =>{
     e.preventDefault();
     setDragging(true)
-    // console.log('Dragging the file now...')
   };
 
   const handleDrop = (e) =>{
     e.preventDefault()
-    console.log('Dropped !')
     const droppedFiles = Array.from(e.dataTransfer.files)
     setFiles(droppedFiles);
-    console.log(droppedFiles)
     setDragging(false)
   };
 
@@ -82,17 +79,14 @@ function App() {
 
 
   const upload = () => {
-    console.log('In upload...')
     files.forEach((oneFile)=>{
-      console.log(oneFile.name)
         const fileRef = ref(storage, `allfiles/${oneFile.name+'%'+v4()}`)
       uploadBytes(fileRef, oneFile)
       .then((snapshot)=>{
         getDownloadURL(snapshot.ref).then((url)=>{
           setFileList((prev)=>[...prev, url])
         })
-        console.log(fileList)
-          // console.log('File uploaded :'+file)
+        
       })
     })
     setAllUploaded(true)
@@ -137,15 +131,10 @@ function App() {
     (valid)
     ?
       <>
-        {pdf && <ViewPdf link={pdfLink} callbacc={closePdf} />}
-    {image && <ViewImage link={imageLink} imgname={imgName} callbacc={closeImage} />}
-
-
-
-
+    
       <div className="title">
-        <div style={{fontSize:"1.3rem"}}>Access Your Files. Anywhere.</div>
-        <div className="loginbtn">Log In</div>
+        <div style={{fontSize:"1.2rem"}}>Anybox. Anywhere</div>
+        
       </div>
       <div className="body" name='file' onDragOver={(e)=>handleDragOver(e)} onDrop={handleDrop}  onDragEnd={()=>{setDragging(false)}}  onDragExitCapture={()=>{setDragging(false)}}  >
         {
@@ -178,7 +167,7 @@ function App() {
           name="" 
           multiple={true}
           id="fileinput" 
-          onChange={(e)=>{setFiles(Array.from(e.target.files)); console.log(Array.from(e.target.files))}}
+          onChange={(e)=>{setFiles(Array.from(e.target.files))}}
           />
 
         {/* {dragging && <div className="drag-cover">SOPFIHBKJn</div>} */}
@@ -197,11 +186,13 @@ function App() {
             ?
             fileList.map((e)=>(
               // <a href={e} target='blank' style={{textDecoration: 'none'}}>
-              <div className="one-file">
-                <div className="del" onClick={()=>{deleteFile(e)}}><DeleteOutline color='white' /></div>
+              <div className="one-file" key={e}>
+                {/* <div className="del" onClick={()=>{deleteFile(e)}}><DeleteOutline color='white' /></div> */}
                 <div onClick={()=>{
                   if(e.includes('.pdf')){
                     setPdfLink(e); showPdf(true);
+                    var dd = document.getElementById("docc")
+                    dd.scrollIntoView()
                   }
                   else if(e.includes('.png')||e.includes('.jpg')||e.includes('.jpeg')||e.includes('.webp')||e.includes('.gif')||e.includes('.mp4')){
                     setImageLink(e); showImage(true);
@@ -249,6 +240,9 @@ function App() {
           
         </div>
 
+
+        {  pdf && <div id='imgg'><ViewPdf link={pdfLink} callbacc={closePdf} /> </div> }
+    {image && <div id='docc'><ViewImage link={imageLink} imgname={imgName} callbacc={closeImage} /> </div> }
       </>
 
 
@@ -258,10 +252,10 @@ function App() {
       {/* <img src="https://images.roadtrafficsigns.com/img/dp/md/traffic-funny-sign.jpg" alt="NOT ALLOWED" /> */}
       Oops, looks like you don't know the password.<br/>
       
-    </div>
-    
+    </div>   
     
     }
+    <center><div className="rights">All rights reserved. If found, please appreciate @<a href='https://mail.google.com/mail/u/0/?&to=aftabcm7@gmail.com&tf=cm' target='_blank'>here</a></div></center>
     
         </>
   )

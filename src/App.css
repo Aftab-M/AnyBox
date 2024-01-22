@@ -106,6 +106,9 @@ input{
   .files{
     justify-content: center;
   }
+  .title{
+    justify-content: center;
+  }
 }
 
 .one-file{
@@ -123,7 +126,7 @@ input{
   text-align: center;
   transition: .2s ease;
   font-size: 1rem;
-  position: relative;
+  /* position: relative; */
 }
 .one-file:hover{
   background-color: rgb(180, 175, 175);
@@ -250,6 +253,7 @@ input{
   right: 0;
   top: 0;
   margin: 3%; 
+  color: white;
 }
 .del:hover{
   color: red;
@@ -268,7 +272,16 @@ input{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 92vh;
   font-size: 1.5rem;
+  text-align: center;
 }
 
+
+
+.rights{
+  font-size: .8rem;
+  text-align: center;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}

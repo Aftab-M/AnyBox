@@ -1,6 +1,6 @@
 .pdfview{
     background-color: rgb(53, 50, 50);
-    position: fixed;
+    /* position: fixed; */
     left: 6;
     top: 0;
     margin: 1%;
@@ -50,7 +50,7 @@
 
 .imageview{
     background-color: rgb(53, 50, 50);
-    position: fixed;
+    /* position: fixed; */
     left: 6;
     top: 0;
     margin: 1%;

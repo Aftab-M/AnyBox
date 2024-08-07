@@ -35,7 +35,7 @@ function App() {
   useEffect(()=>{
 
     var res = prompt('Enter the security code please...')
-    if(res=='#a#b#c'){
+    if(res==process.env.SECRET){
       setValid(true)
     }
     
@@ -171,8 +171,6 @@ function App() {
           id="fileinput" 
           onChange={(e)=>{setFiles(Array.from(e.target.files))}}
           />
-
-        {/* {dragging && <div className="drag-cover">SOPFIHBKJn</div>} */}
         
         <div className="or">OR</div>
         <div className="drop">Drop a file here !</div>
@@ -180,7 +178,6 @@ function App() {
         }
       </div>
       
-      {/* <div style={{height: '5rem', width: '5rem', padding: '1rem'}}></div> */}
       {  pdf && <div id='imgg'><ViewPdf link={pdfLink} callbacc={closePdf} /> </div> }
     {image && <div id='docc'><ViewImage link={imageLink} imgname={imgName} callbacc={closeImage} /> </div> }
       <div className="your-files-main">
@@ -193,15 +190,12 @@ function App() {
             fileList.map((e)=>(
               <a href={e} target='blank' style={{textDecoration: 'none'}}>
               <div className="one-file" key={e}>
-                {/* <div className="del" onClick={()=>{deleteFile(e)}}><DeleteOutline color='white' /></div> */}
                 <div onClick={()=>{
                   if(e.includes('.pdf')){
                     setPdfLink(e); 
-                    // showPdf(true);
                   }
                   else if(e.includes('.png')||e.includes('.jpg')||e.includes('.jpeg')||e.includes('.webp')||e.includes('.gif')||e.includes('.mp4')){
                     setImageLink(e); 
-                    // showImage(true);
                     setImgName(ref(storage, e).name.split('%')[0])
                   }
                   else{
@@ -228,7 +222,6 @@ function App() {
                 } 
                 
                 <div className="file-name"> 
-                {/* <a href={e}>{e.split('%')[0]}</a>   */}
                 {ref(storage, e).name.split('%')[0]} 
                 </div>
                 </div>
@@ -254,13 +247,10 @@ function App() {
     :
     
     <div className='invalid'>
-      {/* <img src="https://images.roadtrafficsigns.com/img/dp/md/traffic-funny-sign.jpg" alt="NOT ALLOWED" /> */}
       Oops, looks like you don't know the password.<br/>
-      
     </div>   
     
     }
-    {/* <center><div className="rights">All rights reserved. If found, please appreciate @<a href='https://mail.google.com/mail/u/0/?&to=aftabcm7@gmail.com&tf=cm' target='_blank'>here</a></div></center> */}
     <center><div className="rights">All rights reserved. </div></center>
     
         </>

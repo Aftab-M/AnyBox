@@ -45,7 +45,6 @@ const storage = multer.diskStorage({
 
 app.post('/upload-files', upload.single("file"),async (req, res)=>{
     console.log(req.file)
-    // res.send('AYO IT WORKED !')
     const title = req.body.title
     const filename = req.file.filename;
 

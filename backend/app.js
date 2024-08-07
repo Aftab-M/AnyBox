@@ -1,5 +1,3 @@
-// import { createRequire } from 'module'
-// const require = createRequire(import.meta.url)
 const app = require('express')()
 const express = require('express')
 const cors = require('cors')
@@ -11,7 +9,7 @@ require('./pdfDetails')
 app.use('/files', express.static('files'))
 
 
-mong.connect("mongodb+srv://useraf:af9999a@cluster0.awk4cby.mongodb.net/anybox?retryWrites=true&w=majority")
+mong.connect(process.env.MONGO_STRING)
 app.use(cors({origin:'*', methods:['POST', 'GET'], credentials:true}))
 app.use(express.json())
 
@@ -27,8 +25,6 @@ app.get('/', async(req, res)=> {
     res.send({msg:'Working just fine...', data:all})
 })
 
-
-// const upload = multer({dest:'./files'})
 
 
 const storage = multer.diskStorage({
